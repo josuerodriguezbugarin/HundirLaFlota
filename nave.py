@@ -8,6 +8,11 @@ class Nave:
             nombre (str): Nombre del barco (Submarino, Buque, Portaaviones)
             tamano (int): Tamaño de la nave (número de casillas que ocupa)
         """
+        self.nombre = nombre
+        self.tamano = tamano
+        self.vida = tamano
+
+
         pass
 
     def recibir_disparo(self):
@@ -18,4 +23,8 @@ class Nave:
         Returns:
             str: Estado de la nave tras el disparo ("Tocado", "Hundido", etc.)
         """
-        return ""
+        self.vida -= 1
+        if self.vida <= 0:
+            return "Hundido"
+        else:
+            return "Tocado"
