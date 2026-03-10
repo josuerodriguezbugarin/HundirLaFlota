@@ -33,3 +33,6 @@ class Juego:
             y (int): Coordenada Y del disparo
         """
         pass
+
+
+if __name__ == "__main__":
