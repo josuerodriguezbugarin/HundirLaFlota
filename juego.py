@@ -25,3 +25,11 @@ class Juego:
 
 if __name__ == "__main__":
     Juego()
+        Args:
+            x (int): Coordenada X del disparo
+            y (int): Coordenada Y del disparo
+        """
+        pass
+
+
+if __name__ == "__main__":
