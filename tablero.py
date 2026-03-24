@@ -1,76 +1,45 @@
-from nave import Nave
-from casilla import Casilla
-
+# Clase que representa el tablero del juego
 class Tablero:
-    def __init__(self):
+    def __init__(self, tamano=10):
+        """
+        Constructor de la clase Tablero.
+        Inicializa una matriz de casillas vacía (sin naves).
+        Las naves se colocan posteriormente usando el método colocar_nave().
 
-        self.AGUA = 0
-        self.TOCADO = 1
-        self.HUNDIDO = 2
+        Args:
+            tamano (int): Dimensión del tablero (por defecto 10x10)
+        """
+        pass
 
-        # ===== NAVES =====
-        por1 = Nave("Destructor", "portaaviones", 5)
-        fra1 = Nave("Bismarck", "fragata", 3)
-        fra2 = Nave("Prince of Wales", "fragata", 3)
-        fra3 = Nave("Graf Spee", "fragata", 3)
+    def colocar_nave(self, nave, x, y, orientacion):
+        """
+        Coloca una nave en el tablero en las coordenadas especificadas.
+        Marca las casillas ocupadas por la nave según su tamaño y orientación.
 
-        sub1 = Nave("U-47", "submarino", 1)
-        sub2 = Nave("U-96", "submarino", 1)
-        sub3 = Nave("U-505", "submarino", 1)
-        sub4 = Nave("U-534", "submarino", 1)
+        Args:
+            nave (Nave): Objeto nave a colocar
+            x (int): Coordenada X inicial (fila)
+            y (int): Coordenada Y inicial (columna)
+            orientacion (str): Orientación de la nave
+                              "H" para horizontal (expande en columnas)
+                              "V" para vertical (expande en filas)
 
-        # ===== TABLERO BASE (SOLO CASILLAS) =====
-        self.casillero = [
-            [Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla()],
-
-            [Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla()],
-
-            [Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla()],
-
-            [Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla()],
-
-            [Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla()],
-
-            [Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla()],
-
-            [Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla()],
-
-            [Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla()],
-
-            [Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla()],
-
-            [Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla()]
-        ]
-
-
-
-        # portaaviones
-        self.casillero[1][1].nave = por1
-        self.casillero[1][2].nave = por1
-        self.casillero[1][3].nave = por1
-        self.casillero[1][4].nave = por1
-        self.casillero[1][5].nave = por1
-
-        # fragatas
-        self.casillero[3][3].nave = fra1
-        self.casillero[4][3].nave = fra1
-        self.casillero[5][3].nave = fra1
-
-        self.casillero[7][1].nave = fra2
-        self.casillero[7][2].nave = fra2
-        self.casillero[7][3].nave = fra2
-
-        self.casillero[9][1].nave = fra3
-        self.casillero[9][2].nave = fra3
-        self.casillero[9][3].nave = fra3
-
-        # submarinos
-        self.casillero[4][6].nave = sub1
-        self.casillero[9][9].nave = sub2
-        self.casillero[7][6].nave = sub3
-        self.casillero[9][5].nave = sub4
-
-    # ===== DISPARO =====
+        Example:
+            tablero.colocar_nave(submarino, 0, 0, "H")  # Coloca horizontalmente desde (0,0)
+            tablero.colocar_nave(buque, 5, 3, "V")      # Coloca verticalmente desde (5,3)
+        """
+        pass
+    
     def comprobar_impacto(self, x, y):
-        print(f"Impacto en ({x},{y})")
-        return self.casillero[x][y].disparar()
+        """
+        Comprueba si hay una nave en las coordenadas indicadas.
+        Si hay nave, llama a su método recibir_disparo().
+
+        Args:
+            x (int): Coordenada X del disparo
+            y (int): Coordenada Y del disparo
+
+        Returns:
+            str: Resultado del disparo ("Agua", "Tocado", "Hundido")
+        """
+        return ""
