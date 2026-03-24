@@ -1,4 +1,5 @@
 class Nave:
+    #Representa un barco en el juego con su vida y estado actual.
     TOCADO = 1
     HUNDIDO = 2
 
@@ -9,6 +10,9 @@ class Nave:
         self.hundido = False
 
     def recibir_disparo(self):
+        #Resta una vida a la nave y actualiza su estado si la vida llega a cero.
+        #Retorna el estado resultante (TOCADO o HUNDIDO).
+
         if self.hundido:
             return self.HUNDIDO
 

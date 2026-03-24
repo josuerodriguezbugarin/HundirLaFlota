@@ -1,2 +1,101 @@
 Aqui explicare como funciona mi codigo en cada parte, lo primero sera:
 
+
+Primeramente e divido el codigo en 4 clases principales:
+
+
+## 1. Clase Casilla
+Es la principal novedad de esta versión y actúa como la "memoria" del tablero.
+* **Atributos:** Tiene un atributo booleano `visitada` (que empieza en `False`) y un atributo `nave` que guarda el barco que hay en esa posición (o `None` si es agua).
+* **Funcionamiento:** Su método `disparar()` es el escudo protector del juego. Si se dispara a una casilla, primero comprueba si `visitada` es `True`. Si lo es, bloquea el disparo y devuelve `None`. Si no lo es, cambia a `True` y le pasa el daño a la nave (si es que hay una).
+
+class Casilla:
+    def __init__(self):
+        self.nave = None
+        self.visitada = False
+
+    def disparar(self):
+        if self.visitada:
+            print("Ya disparaste aquí")
+            return None
+
+        self.visitada = True
+
+        if self.nave is None:
+            print("Agua")
+            return 0
+
+        return self.nave.recibir_disparo()
+
+
+## 2. Clase Nave
+Representa los barcos del juego (Portaaviones, Fragatas, Submarinos).
+    def __init__(self, nombre, tipo, vida):
+        self.nombre = nombre
+        self.tipo = tipo
+        self.vida = vida
+        self.hundido = False
+
+* **Atributos:** Guarda el nombre, el tipo, la `vida` restante y si está `hundido`.
+
+    def recibir_disparo(self):
+        if self.hundido:
+            return self.HUNDIDO
+
+        self.vida -= 1
+
+        if self.vida <= 0:
+            self.vida = 0
+            self.hundido = True
+            print(f"{self.nombre} hundido")
+            return self.HUNDIDO
+        else:
+            print(f"{self.nombre} tocado. Vida restante: {self.vida}")
+            return self.TOCADO
+
+* **Funcionamiento:** Su método `recibir_disparo()` resta 1 a su vida. Si la vida llega a 0, cambia su estado a hundido y devuelve un `2` (HUNDIDO). Si le queda vida, devuelve un `1` (TOCADO).
+
+
+
+## 3. Clase Tablero
+Es el mapa del juego y el encargado de organizar los elementos, le tengo que importar las clases de nave y casilla para que sepa donde esta cada cosa:
+from nave import Nave
+from casilla import Casilla
+
+* **Atributos:** Crea una matriz de 10x10 (`self.casillero`) rellenándola entera con objetos `Casilla()`. Luego, instancia los objetos `Nave` y los asigna a las casillas correspondientes.
+
+class Tablero:
+    def __init__(self):
+
+        self.AGUA = 0
+        self.TOCADO = 1
+        self.HUNDIDO = 2
+
+# ===== TABLERO BASE (SOLO CASILLAS) =====
+        self.casillero = [
+            [Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla()],
+
+            [Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla()],
+
+            [Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla()],
+
+            [Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla()],
+
+            [Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla()],
+
+            [Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla()],
+
+            [Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla()],
+
+            [Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla()],
+
+            [Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla()],
+
+            [Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla(), Casilla()]
+        ]
+
+* **Funcionamiento:** Su método `comprobar_impacto(x, y)` sirve de puente. Simplemente recibe las coordenadas y llama al método `disparar()` de la casilla exacta que está en `self.casillero[x][y]`.
+
+## 4. Clase Juego
+Es el controlador principal y el que interactúa con el jugador.
+* **Funcionamiento:** Su método `lanzar_ataque(x, y)` le pide al tablero que dispare a unas coordenadas. Recibe la respuesta en cascada (desde la Casilla/Nave) y utiliza el método `mostrar_resultado()` para imprimir por pantalla el resultado final: "Agua", "Tocado", "Hundido" o "Ya disparaste aquí".

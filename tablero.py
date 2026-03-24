@@ -2,6 +2,8 @@ from nave import Nave
 from casilla import Casilla
 
 class Tablero:
+
+    #Gestiona la matriz de casillas de 10x10 y la colocación de las naves.
     def __init__(self):
 
         self.AGUA = 0
@@ -72,5 +74,7 @@ class Tablero:
 
     # ===== DISPARO =====
     def comprobar_impacto(self, x, y):
+
+        #Delega el disparo del jugador a la casilla específica en las coordenadas (x, y).
         print(f"Impacto en ({x},{y})")
         return self.casillero[x][y].disparar()
